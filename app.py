@@ -23,6 +23,10 @@ def result():
 def oshietai():
     return render_template('checkbox.html')
 
+@app.route('/thanks')
+def thanks():
+    return render_template('thx.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
