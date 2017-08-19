@@ -22,11 +22,13 @@
 
   </script> 
     <script type="text/x-template" id="hello">
-	  <ol>
-	    <li v-for="context in contexts">
-          {% raw %} {{ context.context }} {% endraw %}
-	    </li>
-	  </ol>
+	  <div id="app-4">    
+      <ol>
+  	    <li v-for="context in contexts">
+            {% raw %} {{ context.context }} {% endraw %}
+  	    </li>
+  	  </ol>
+    </div>
     </script>
  <link rel="stylesheet" href="">
 </head>
@@ -36,17 +38,17 @@
 	<script>
   
 //データの一回読み取り
-    firebase.database().ref('/rooms/room1/chats').once('value').then(function(snapshot) {
-        var messages = snapshot.val();
-        var app = new Vue({
-            el: '#app-4',
-            template: "#hello",
-            data: {
-                contexts:messages
-            }
-        })
+    // firebase.database().ref('/rooms/room1/chats').once('value').then(function(snapshot) {
+    //     var messages = snapshot.val();
+    //     var app = new Vue({
+    //         el: '#app-4',
+    //         template: "#hello",
+    //         data: {
+    //             contexts:messages
+    //         }
+    //     })
 
-    });
+    // });
   
   // //データの変更を検知
   var starCountRef = firebase.database().ref('/rooms/room1/chats');
@@ -55,6 +57,7 @@
     var contexts = snapshot.val();
     var app = new Vue({
         el: '#app-4',
+        template: "#hello",
         data: {
             contexts:contexts
         }
@@ -64,13 +67,15 @@
 
 
   //データの書き込み
-  function writeUserData(userId, name, email, imageUrl) {
+  function writeUserData() {
+    var context = document.getElementById('input_text').value
     firebase.database().ref('rooms/room1/chats').push(
-      {user:"1",context:"hogehoge"});
+      {user:"1",context:context});
   }
-  writeUserData("1",'itaya',"s@gmail","iii");
+  //writeUserData("1",'itaya',"s@gmail","iii");
 </script>
-
+<input type="text" id="input_text" value="" placeholder="">
+<input type="button" name="" value="" onclick="writeUserData()">
 </body>
 </html>
 
