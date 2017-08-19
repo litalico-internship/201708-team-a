@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
   <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script src="https://unpkg.com/vue"></script>
   <script>
     // Initialize Firebase
     var config = {
@@ -23,16 +24,29 @@
  <link rel="stylesheet" href="">
 </head>
 <body>
-<script>
+	<div id="app-4">
+	  <ol>
+	    <li v-for="context in contexts">
+	      {{ context.context }}
+	    </li>
+	  </ol>
+	</div>
+	<script>
   
-  //データの一回読み取り
-  firebase.database().ref('/itayatest/' + '1').once('value').then(function(snapshot) {
-    var username = snapshot.val().username;
-    console.log(username);
-  });
+ //  //データの一回読み取り
+ //  firebase.database().ref('/rooms/room1/chats').once('value').then(function(snapshot) {
+ //    var contexts = snapshot.val();
+ //    var app = new Vue({
+	//   el: '#app-4',
+	//   data: {
+	//   	contexts:contexts
+	//   }
+	// })
+
+ //  });
   
-  //データの変更を検知
-  var starCountRef = firebase.database().ref('itayatest/' + '1');
+  // //データの変更を検知
+  var starCountRef = firebase.database().ref('/rooms/room1/chats');
   starCountRef.on('value', function(snapshot) {
     console.log(snapshot.val());
   });
@@ -40,13 +54,10 @@
 
   //データの書き込み
   function writeUserData(userId, name, email, imageUrl) {
-    firebase.database().ref('itayatest/' + userId).set({
-      username: name,
-      email: email,
-      profile_picture : imageUrl
-    });
+    firebase.database().ref('rooms/room1/chats').push(
+      {user:"1",context:"hogehoge"});
   }
-//  writeUserData("1",'itaya',"s@gmail","iii");
+  writeUserData("1",'itaya',"s@gmail","iii");
 </script>
 
 </body>
