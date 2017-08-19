@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
-  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
   <script src="https://unpkg.com/vue"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
   <script>
     // Initialize Firebase
     var config = {
@@ -21,34 +21,45 @@
     //var ref = database.ref("server/saving-data/fireblog/posts");
 
   </script> 
+    <script type="text/x-template" id="hello">
+	  <ol>
+	    <li v-for="context in contexts">
+          {% raw %} {{ context.context }} {% endraw %}
+	    </li>
+	  </ol>
+    </script>
  <link rel="stylesheet" href="">
 </head>
 <body>
 	<div id="app-4">
-	  <ol>
-	    <li v-for="context in contexts">
-	      {{ context.context }}
-	    </li>
-	  </ol>
-	</div>
+    </div>
 	<script>
   
- //  //データの一回読み取り
- //  firebase.database().ref('/rooms/room1/chats').once('value').then(function(snapshot) {
- //    var contexts = snapshot.val();
- //    var app = new Vue({
-	//   el: '#app-4',
-	//   data: {
-	//   	contexts:contexts
-	//   }
-	// })
+//データの一回読み取り
+    firebase.database().ref('/rooms/room1/chats').once('value').then(function(snapshot) {
+        var messages = snapshot.val();
+        var app = new Vue({
+            el: '#app-4',
+            template: "#hello",
+            data: {
+                contexts:messages
+            }
+        })
 
- //  });
+    });
   
   // //データの変更を検知
   var starCountRef = firebase.database().ref('/rooms/room1/chats');
   starCountRef.on('value', function(snapshot) {
-    console.log(snapshot.val());
+    //console.log(snapshot.val());
+    var contexts = snapshot.val();
+    var app = new Vue({
+        el: '#app-4',
+        data: {
+            contexts:contexts
+        }
+    })
+
   });
 
 
