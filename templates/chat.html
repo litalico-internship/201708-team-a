@@ -24,8 +24,8 @@
     <script type="text/x-template" id="hello">
 	  <div id="app-4">    
       <ol>
-  	    <li v-for="context in contexts">
-            {% raw %} {{ context.context }} {% endraw %}
+  	    <li v-for="context in contexts" style="list-style:none;">
+            {% raw %}  {{ context.user }} {{ context.context }} {% endraw %}
   	    </li>
   	  </ol>
     </div>
@@ -36,7 +36,8 @@
 	<div id="app-4">
     </div>
 	<script>
-  
+        // ここあとで変える
+        document.cookie = '1';
 //データの一回読み取り
     // firebase.database().ref('/rooms/room1/chats').once('value').then(function(snapshot) {
     //     var messages = snapshot.val();
@@ -70,7 +71,7 @@
   function writeUserData() {
     var context = document.getElementById('input_text').value
     firebase.database().ref('rooms/room1/chats').push(
-      {user:"1",context:context});
+      {user:document.cookie,context:context});
   }
   //writeUserData("1",'itaya',"s@gmail","iii");
 </script>
@@ -78,4 +79,3 @@
 <input type="button" name="" value="" onclick="writeUserData()">
 </body>
 </html>
-
