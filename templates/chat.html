@@ -21,11 +21,17 @@
     //var ref = database.ref("server/saving-data/fireblog/posts");
 
   </script> 
-    <script type="text/x-template" id="hello">
+    <script type="text/x-template" id="hello1">
   	  <div id="app-4">    
         <ol>
     	    <li v-for="context in contexts" style="list-style:none;">
+              <div v-if="context.user === '1'" class="caller">
               {% raw %}  {{ context.user }} {{ context.context }} {% endraw %}
+              </div>
+              <div v-else class="listener">
+              {% raw %}  {{ context.user }} {{ context.context }} {% endraw %}
+              </div>
+
           </li>
     	  </ol>
       </div>
@@ -58,10 +64,7 @@
     var contexts = snapshot.val();
     var app = new Vue({
         el: '#app-4',
-        template: "#hello",
-        component:{
-          template: '{{ context.user }}'
-        },
+        template: "#hello1",
         data: {
             contexts:contexts
         }
@@ -79,5 +82,10 @@
 </script>
 <input type="text" id="input_text" value="" placeholder="">
 <input type="button" name="" value="" onclick="writeUserData()">
+<style>
+  .caller{
+    color:red;
+  }
+</style>
 </body>
 </html>
