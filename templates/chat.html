@@ -1,1 +1,54 @@
-chat
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCvO289XjApLcg8Q-Mk1foCeBKVAlW_MHc",
+      authDomain: "itayatest.firebaseapp.com",
+      databaseURL: "https://itayatest.firebaseio.com",
+      projectId: "itayatest",
+      storageBucket: "itayatest.appspot.com",
+      messagingSenderId: "754161336003"
+    };
+    firebase.initializeApp(config);
+    var database = firebase.database();
+    //var ref = database.ref("server/saving-data/fireblog/posts");
+
+  </script> 
+ <link rel="stylesheet" href="">
+</head>
+<body>
+<script>
+  
+  //データの一回読み取り
+  firebase.database().ref('/itayatest/' + '1').once('value').then(function(snapshot) {
+    var username = snapshot.val().username;
+    console.log(username);
+  });
+  
+  //データの変更を検知
+  var starCountRef = firebase.database().ref('itayatest/' + '1');
+  starCountRef.on('value', function(snapshot) {
+    console.log(snapshot.val());
+  });
+
+
+  //データの書き込み
+  function writeUserData(userId, name, email, imageUrl) {
+    firebase.database().ref('itayatest/' + userId).set({
+      username: name,
+      email: email,
+      profile_picture : imageUrl
+    });
+  }
+//  writeUserData("1",'itaya',"s@gmail","iii");
+</script>
+
+</body>
+</html>
+
