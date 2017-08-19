@@ -16,9 +16,25 @@ def chat():
 def result():
     return render_template('result.html')
 
+'''
 @app.route('/oshietai')
 def oshietai():
     return render_template('checkbox.html')
+'''
+
+@app.route('/oshietai', methods=['GET','POST'])
+def oshietai():
+    print(request.method)
+    if request.method == 'POST':
+        itemId = request.form['fav']
+        print(itemId)
+
+        # 教えたい側のdbから対応するユーザーidをとってくる
+        register(itemId)
+        # 別のページに移動
+        return page
+
+    return render_template("checkbox.html")
 
 @app.route('/thanks')
 def thanks():
