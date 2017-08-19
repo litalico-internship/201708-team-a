@@ -51,7 +51,7 @@ def oshietai():
         # 教えたい側のdbから対応するユーザーidをとってくる
         register(itemIds)
         # 別のページに移動
-        return page
+        return redirect(url_for('thanks'))
 
     return render_template("checkbox.html")
 
@@ -75,7 +75,7 @@ def siritai():
         # 教えたい側のdbから対応するユーザーidをとってくる
         uids = get_uids(itemId)
         # 別のページに移動＋ユーザーidを渡す
-        return uids
+        return render_template('result.html', uids=uids)
 
     return render_template("siritai.html")
 
