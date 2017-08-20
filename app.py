@@ -48,6 +48,17 @@ def siritai():
 def result():
     return render_template('result.html')
 
+<<<<<<< HEAD
+@app.route('/oshietai')
+def oshietai():
+    return render_template('checkbox.html')
+
+@app.route('/thanks')
+def thanks():
+    return render_template('thx.html')
+
+=======
+>>>>>>> origin/master
 
 if __name__ == '__main__':
     app.run(debug=True)
