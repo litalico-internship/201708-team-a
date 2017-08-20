@@ -69,3 +69,9 @@ def get_item_name(itemId):
         results = cursor.fetchall()
         name = results[0]['name']
         return name
+
+def get_item_names(itemIds):
+    names = []
+    for itemId in itemIds:
+        names.append(get_item_name(itemId))
+    return names

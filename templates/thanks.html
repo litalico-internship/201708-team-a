@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width">
   <title></title>
   <script src="https://unpkg.com/vue"></script>
   <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
@@ -28,12 +29,30 @@
       </div>
     </div>
   </script>
+  <style>
+  body{
+    background-color: #EEE8D5;
+    color: #002b36;
+  }
+  </style>
 </head>
 <body>
-  登録ありがとう
-  {{ user_id }}
+  <div class="starter-template">
+  <h3>
+    <p>
+    ご登録ありがとうございます。
+    </p>
+    <p>
+  {{ item_names[0] }}
+  {% for item_name in item_names[1:] %}
+    ・{{ item_name }}
+  {% endfor %}
+  について相談したい人が来たらお知らせします。
+    </p>
+  </h3>
 
   <div id="roomCandidates">
+  </div>
   </div>
 
   <script>
@@ -44,19 +63,12 @@
         rooms: []
       }
     });
-    var counselor_id = {{ user_id }}
+    var counselor_id = {{ user_id }};
     var ref = firebase.database().ref('/counselors/' + counselor_id);
 
     ref.on('value', function(snapshot) {
       app.rooms = snapshot.val();
     });
-
-    //データの書き込み
-    function writeUserData() {
-      var context = document.getElementById('input_text').value
-      firebase.database().ref('rooms/room1/chats').push(
-        {user:document.cookie,context:context});
-    }
   </script>
 </body>
 </html>
