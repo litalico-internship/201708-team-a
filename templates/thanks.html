@@ -1,1 +1,62 @@
-ありがとう
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCvO289XjApLcg8Q-Mk1foCeBKVAlW_MHc",
+      authDomain: "itayatest.firebaseapp.com",
+      databaseURL: "https://itayatest.firebaseio.com",
+      projectId: "itayatest",
+      storageBucket: "itayatest.appspot.com",
+      messagingSenderId: "754161336003"
+    };
+    firebase.initializeApp(config);
+    var database = firebase.database();
+    //var ref = database.ref("server/saving-data/fireblog/posts");
+
+  </script>
+  <script type="text/x-template" id="chatRoomCandidate">
+    <div>
+      <div v-for="room in rooms">
+        {% raw %} <a href="/chat?counselor_flag=true">{{ rooms["tag"] }}について相談したい人がいます</a> {% endraw %}
+      </div>
+    </div>
+  </script>
+</head>
+<body>
+  登録ありがとう
+  {{ user_id }}
+
+  <div id="roomCandidates">
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#roomCandidates',
+      template: "#chatRoomCandidate",
+      data: {
+        rooms: []
+      }
+    });
+    var counselor_id = {{ user_id }}
+    var ref = firebase.database().ref('/counselors/' + counselor_id);
+
+    ref.on('value', function(snapshot) {
+      app.rooms = snapshot.val();
+    });
+
+    //データの書き込み
+    function writeUserData() {
+      var context = document.getElementById('input_text').value
+      firebase.database().ref('rooms/room1/chats').push(
+        {user:document.cookie,context:context});
+    }
+  </script>
+</body>
+</html>

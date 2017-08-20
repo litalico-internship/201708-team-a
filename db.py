@@ -38,6 +38,7 @@ def register(itemIds):
         cursor.execute(sql)
         results = cursor.fetchall()
         print(results)
+        return user_id
 
 
 #教えたい側のid引っ張る
@@ -59,3 +60,12 @@ def get_items():
         results = cursor.fetchall()
         results = list(map(lambda items: Item(items['id'], items['name']), results))
         return results
+
+def get_item_name(itemId):
+    with connection.cursor() as cursor:
+        sql = "SELECT * FROM teaching_item WHERE id = %s"
+        cursor.execute(sql, itemId)
+
+        results = cursor.fetchall()
+        name = results[0]['name']
+        return name
