@@ -15,7 +15,7 @@ def chat():
 @app.route('/oshietai', methods=['POST'])
 def oshietai():
     if request.method == 'POST':
-        item_ids = request.form.getlist('fav')
+        item_ids = request.form.getlist('teach_cat')
         item_ids = list(map(int, item_ids))
         print(item_ids)
 
@@ -34,7 +34,7 @@ def thanks():
 @app.route('/siritai', methods=['POST'])
 def siritai():
     if request.method == 'POST':
-        item_ids = request.form['category']
+        item_ids = request.form['learn_cat']
         print(item_ids)
 
         # 教えたい側のdbから対応するユーザーidをとってくる
