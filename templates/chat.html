@@ -49,7 +49,7 @@
                             <strong class="primary-font">相手</strong>
                           </div>
                           <p>
-                            {% raw %}  {{ context.user }} {{ context.context }} {% endraw %}
+                            {% raw %} {{ context.context }} {% endraw %}
                           </p>
                         </div>
                       </li>                 
@@ -74,10 +74,12 @@
 </head>
 <body>
 
-
-<div class="loading">
-  <img src="/static/loading.gif" alt="">  
-</div>
+<center>
+  <div class="loading">
+    <img src="/static/loading2.gif" width="30px" alt="">  
+  </div>
+  
+</center>
 <div class="chat_block">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
   <div class="container bootstrap snippet">
@@ -85,7 +87,7 @@
           <!--=========================================================-->
           <!-- selected chat -->
         <div class="col-md-8 bg-white ">
-              <div class="chat-message" id="app-4">
+              <div class="chat-message" id="app-4" style="background-color: white;">
               </div>
               <div class="chat-box bg-white">
                 <div class="input-group">
@@ -182,6 +184,7 @@
     var contexts = snapshot.val();
     if (contexts.caller == "in" && contexts.listener == "in") {
       $('.loading').remove();
+      $('.col-md-8').prepend('チャットスタート');
     }
   });
 
@@ -205,8 +208,20 @@
   //writeUserData("1",'itaya',"s@gmail","iii");
 </script>
 <style>
-.loading{
-  width: 100%;
+
+.loading {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  margin: auto;
+
+  width: 128px;
+  height: 64px;
+}
+body{
+  background-color: white !important;
 }
 .input-group{
   text-align: center;
@@ -214,6 +229,7 @@
 #input_text{
   width: 80%;
   font-size: 20px;
+  border: solid;
 }
 
 body {
