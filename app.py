@@ -26,7 +26,7 @@ def oshietai():
         # 別のページに移動
         return redirect(url_for('thanks'))
 
-    return render_template("checkbox.html")
+    return render_template("checkbox.html", items=db.get_name())
 
 @app.route('/thanks')
 def thanks():
@@ -45,7 +45,7 @@ def siritai():
         # 別のページに移動＋ユーザーidを渡す
         return render_template('result.html', uids=uids)
 
-    return render_template("siritai.html")
+    return render_template("siritai.html", items=db.get_name())
 
 @app.route('/result')
 def result():

@@ -5,25 +5,15 @@
 <body>
   <form method="post"> <!--action="example.cgi">-->
 
-  <p>
-  <input type="radio" name="category" value=1 checked>恋愛
-  </p>
+    {% for item in items %}
+      <p>
+      <input type="radio" name="category" value={{ item[0] }}>{{ item[1] }}
+      </p>
+    {% endfor %}
 
-  <p>
-  <input type="radio" name="category" value=2>サンプル
-  </p>
-
-  <p>
-  <input type="radio" name="category" value=3>サンプル
-  </p>
-
-  <p>
-  <input type="radio" name="category" value=4>サンプル
-  </p>
-
-  <p>
-  <button type='submit' name='action' value='send'>決定</button>
-  </p>
+    <p>
+    <button type='submit' name='action' value='send'>決定</button>
+    </p>
 
   </form>
 </body>
