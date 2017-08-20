@@ -88,7 +88,6 @@
               </div>
               <div class="chat-box bg-white">
                 <div class="input-group">
-                    {% raw %} {{ message }}  {% endraw %}
                   <input class="form-control border no-shadow no-rounded" id="input_text" v-model="message" v-on:keypress.enter="submit">
                   <!---
                   <span class="input-group-btn">
@@ -157,9 +156,11 @@
         },
         methods: {
             submit:function() {
-              var context = document.getElementById('input_text').value
-              firebase.database().ref('rooms/room1/chats').push(
-                  {user:"{{ user }}",context:context});
+                var context = document.getElementById('input_text').value
+                if(this.message!=""){
+                    firebase.database().ref('rooms/room1/chats').push(
+                        {user:"{{ user }}",context:context});
+                }
                 this.message = "";
                 return true;
             }
