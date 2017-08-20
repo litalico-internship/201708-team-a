@@ -12,7 +12,7 @@ def index():
 def chat():
     return render_template('chat.html')
 
-@app.route('/oshietai', methods=['POST'])
+@app.route('/oshietai', methods=['GET','POST'])
 def oshietai():
     if request.method == 'POST':
         item_ids = request.form.getlist('teach_cat')
@@ -31,7 +31,7 @@ def thanks():
     return render_template('thanks.html')
 
 
-@app.route('/siritai', methods=['POST'])
+@app.route('/siritai', methods=['GET','POST'])
 def siritai():
     if request.method == 'POST':
         item_ids = request.form['learn_cat']
@@ -47,18 +47,6 @@ def siritai():
 @app.route('/result')
 def result():
     return render_template('result.html')
-
-<<<<<<< HEAD
-@app.route('/oshietai')
-def oshietai():
-    return render_template('checkbox.html')
-
-@app.route('/thanks')
-def thanks():
-    return render_template('thx.html')
-
-=======
->>>>>>> origin/master
 
 if __name__ == '__main__':
     app.run(debug=True)

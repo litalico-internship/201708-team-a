@@ -8,7 +8,7 @@ charSet         = "utf8mb4"
 cusrorType      = pymysql.cursors.DictCursor
 connection   = pymysql.connect(user=dbUser, password=dbPassword,
                                      db=dbName, charset=charSet,cursorclass=cusrorType)
-id_num = 0
+user_id = 0
 
 with connection.cursor() as cursor:
     sqlQuery = "TRUNCATE TABLE user"
@@ -16,7 +16,7 @@ with connection.cursor() as cursor:
     sqlQuery = "TRUNCATE TABLE user_teaching_item"
     cursor.execute(sqlQuery)
 
-class Item(self):
+class Item():
     def __init__(self, id, name):
         self.id = id
         self.name = name
