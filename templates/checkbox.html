@@ -1,7 +1,7 @@
 <form method="post">
   {% for item in items %}
     <p>
-      <label><input type="checkbox" name="fav" value={{ item[0] }}>{{ item[1] }}</label>
+      <label><input type="checkbox" name="fav" value={{ item.id }}>{{ item.name }}</label>
     </p>
   {% endfor %}
 

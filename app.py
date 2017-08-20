@@ -1,8 +1,7 @@
-import flask
-from flask import render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
 import db
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 
 @app.route('/')
@@ -13,39 +12,37 @@ def index():
 def chat():
     return render_template('chat.html')
 
-@app.route('/oshietai', methods=['GET','POST'])
+@app.route('/oshietai', methods=['POST'])
 def oshietai():
-    print(request.method)
     if request.method == 'POST':
-        itemIds = request.form.getlist('fav')
-        itemIds = list(map(int, itemIds))
-        print(itemIds)
+        item_ids = request.form.getlist('fav')
+        item_ids = list(map(int, item_ids))
+        print(item_ids)
 
         # 教えたい側のdbから対応するユーザーidをとってくる
-        db.register(itemIds)
+        db.register(item_ids)
         # 別のページに移動
         return redirect(url_for('thanks'))
 
-    return render_template("checkbox.html", items=db.get_name())
+    return render_template("checkbox.html", items=db.get_items())
 
 @app.route('/thanks')
 def thanks():
     return render_template('thanks.html')
 
 
-@app.route('/siritai', methods=['GET','POST'])
+@app.route('/siritai', methods=['POST'])
 def siritai():
-    print(request.method)
     if request.method == 'POST':
-        itemId = request.form['category']
-        print(itemId)
+        item_ids = request.form['category']
+        print(item_ids)
 
         # 教えたい側のdbから対応するユーザーidをとってくる
-        uids = db.get_uids(itemId)
+        user_ids = db.get_uids(item_ids)
         # 別のページに移動＋ユーザーidを渡す
-        return render_template('result.html', uids=uids)
+        return render_template('result.html', user_ids=user_ids)
 
-    return render_template("siritai.html", items=db.get_name())
+    return render_template("siritai.html", items=db.get_items())
 
 @app.route('/result')
 def result():
