@@ -1,8 +1,7 @@
-import flask
-from flask import render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
 import db
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 
 @app.route('/')
@@ -15,18 +14,17 @@ def chat():
 
 @app.route('/oshietai', methods=['GET','POST'])
 def oshietai():
-    print(request.method)
     if request.method == 'POST':
-        itemIds = request.form.getlist('fav')
-        itemIds = list(map(int, itemIds))
-        print(itemIds)
+        item_ids = request.form.getlist('teach_cat')
+        item_ids = list(map(int, item_ids))
+        print(item_ids)
 
         # 教えたい側のdbから対応するユーザーidをとってくる
-        db.register(itemIds)
+        db.register(item_ids)
         # 別のページに移動
         return redirect(url_for('thanks'))
 
-    return render_template("checkbox.html", items=db.get_name())
+    return render_template("checkbox.html", items=db.get_items())
 
 @app.route('/thanks')
 def thanks():
@@ -34,23 +32,21 @@ def thanks():
 
 @app.route('/siritai', methods=['GET','POST'])
 def siritai():
-    print(request.method)
     if request.method == 'POST':
-        itemId = request.form['category']
-        print(itemId)
+        item_ids = request.form['learn_cat']
+        print(item_ids)
 
         # 教えたい側のdbから対応するユーザーidをとってくる
-        uids = db.get_uids(itemId)
+        user_ids = db.get_uids(item_ids)
         # 別のページに移動＋ユーザーidを渡す
-        return render_template('result.html', uids=uids)
+        return render_template('result.html', user_ids=user_ids)
 
-    return render_template("siritai.html", items=db.get_name())
+    return render_template("siritai.html", items=db.get_items())
 
 
 @app.route('/result')
 def result():
     return render_template('result.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
