@@ -24,7 +24,7 @@
   <script type="text/x-template" id="chatRoomCandidate">
     <div>
       <div v-for="room in rooms">
-        {% raw %} {{ room }} {% endraw %}
+        {% raw %} <a href="/chat?counselor_flag=true">{{ rooms["tag"] }}について相談したい人がいます</a> {% endraw %}
       </div>
     </div>
   </script>

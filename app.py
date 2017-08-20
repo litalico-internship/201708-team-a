@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import db
+from firebase import firebase
+firebase = firebase.FirebaseApplication("https://itayatest.firebaseio.com", None)
 
 app = Flask(__name__)
 
@@ -10,7 +12,14 @@ def index():
 
 @app.route('/chat')
 def chat():
-    return render_template('chat.html',user='listener')
+    counselor_flag = request.args.get('counselor_flag')
+    if counselor_flag == 'true':
+        user_type = 'counselor'
+        firebase.put('', 'rooms/room1/caller', 'in')
+    else:
+        user_type = 'listener'
+
+    return render_template('chat.html',user=user_type)
 
 @app.route('/oshietai', methods=['GET','POST'])
 def oshietai():
@@ -33,13 +42,24 @@ def thanks():
 @app.route('/siritai', methods=['GET','POST'])
 def siritai():
     if request.method == 'POST':
-        item_ids = request.form['learn_cat']
-        print(item_ids)
+        item_id = request.form['learn_cat']
+        print(item_id)
 
         # 教えたい側のdbから対応するユーザーidをとってくる
-        user_ids = db.get_uids(item_ids)
+        user_ids = db.get_uids(item_id)
         # 別のページに移動＋ユーザーidを渡す
-        return render_template('result.html', user_ids=user_ids)
+
+        print(user_ids)
+
+        item_name = db.get_item_name(item_id)
+
+        for user_id in user_ids:
+            print(user_id)
+            firebase.put('', 'counselors/' + str(user_id), {'tag': item_name})
+
+        firebase.put('', 'rooms/room1/', {'tag': item_name, 'caller': None, 'listener': 'in', 'chats': None})
+
+        return render_template('chat.html')
 
     return render_template("siritai.html", items=db.get_items())
 
