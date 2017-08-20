@@ -6,6 +6,7 @@
   <title></title>
   <script src="https://unpkg.com/vue"></script>
   <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>
     // Initialize Firebase
     var config = {
@@ -35,16 +36,13 @@
           </li>
     	  </ol>
       </div>
- -->
-
-            <div class="chat-message" id="app-4">
+ -->          <div class="chat-message" id="app-4">
                 <ul class="chat">
                     <div v-for="context in contexts">
                       <li class="left clearfix" v-if="context.user === '1'">
                         <div class="chat-body clearfix">
                           <div class="header">
                             <strong class="primary-font">相手</strong>
-                            <small class="pull-right text-muted"><i class="fa fa-clock-o"></i> 12 mins ago</small>
                           </div>
                           <p>
                             {% raw %}  {{ context.user }} {{ context.context }} {% endraw %}
@@ -55,7 +53,6 @@
                         <div class="chat-body clearfix">
                           <div class="header">
                             <strong class="primary-font">あなた</strong>
-                            <small class="pull-right text-muted"><i class="fa fa-clock-o"></i> 12 mins ago</small>
                           </div>
                           <p>
                             {% raw %}  {{ context.user }} {{ context.context }} {% endraw %}
@@ -74,25 +71,28 @@
 <body>
 
 
-
-
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container bootstrap snippet">
-    <div class="row">
-        <!--=========================================================-->
-        <!-- selected chat -->
-      <div class="col-md-8 bg-white ">
-            <div class="chat-message" id="app-4">
-            </div>
-            <div class="chat-box bg-white">
-              <div class="input-group">
-                <input class="form-control border no-shadow no-rounded" placeholder="Type your message here" id="input_text">
-                <span class="input-group-btn">
-                  <button class="btn btn-success no-rounded" type="button" onclick="writeUserData()">Send</button>
-                </span>
-              </div><!-- /input-group --> 
-            </div>            
-    </div>        
+<div class="loading">
+  <img src="/static/loading.gif" alt="">  
+</div>
+<div class="chat_block">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <div class="container bootstrap snippet">
+      <div class="row">
+          <!--=========================================================-->
+          <!-- selected chat -->
+        <div class="col-md-8 bg-white ">
+              <div class="chat-message" id="app-4">
+              </div>
+              <div class="chat-box bg-white">
+                <div class="input-group">
+                  <input class="form-control border no-shadow no-rounded" placeholder="Type your message here" id="input_text">
+                  <span class="input-group-btn">
+                    <button class="btn btn-success no-rounded" type="button" onclick="writeUserData()">Send</button>
+                  </span>
+                </div><!-- /input-group --> 
+              </div>            
+      </div>        
+    </div>
   </div>
 </div>
 
@@ -100,9 +100,7 @@
 
 
 
-	<div id="app-4">
-    </div>
-	<script>
+<script>
         // ここあとで変える
         document.cookie = '1';
 //データの一回読み取り
@@ -131,6 +129,16 @@
         }
     })
   });
+  //chatの完成待ち
+  var starCountRef = firebase.database().ref('/rooms/room1');
+  starCountRef.on('value', function(snapshot) {
+    console.log(snapshot.val());
+    var contexts = snapshot.val();
+    if (contexts.caller == "in" && contexts.listener == "in") {
+      $('.loading').remove();
+    }
+  });
+
 
 
   //データの書き込み
@@ -142,6 +150,9 @@
   //writeUserData("1",'itaya',"s@gmail","iii");
 </script>
 <style>
+.loading{
+  width: 100%;
+}
 .input-group{
   text-align: center;
 }
