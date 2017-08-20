@@ -46,5 +46,15 @@ def get_uids(itemId):
 
         # Select結果を取り出す
         results = cursor.fetchall()
-        results = set(list(map(lambda dic: list(dic.values())[0], results)))
+        results = set(list(map(lambda dic: dic['id'], results)))
+        return results
+
+def get_name():
+    with connection.cursor() as cursor:
+        sql = "SELECT * FROM teaching_item"
+        cursor.execute(sql)
+
+        # Select結果を取り出す
+        results = cursor.fetchall()
+        results = list(map(lambda dic: (dic['id'], dic['name']), results))
         return results

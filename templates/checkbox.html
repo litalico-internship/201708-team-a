@@ -1,6 +1,9 @@
 <form method="post">
-    <label><input type="checkbox" name="fav" value=1>tag1</label>
-    <label><input type="checkbox" name="fav" value=2>tag2</label>
-    <label><input type="checkbox" name="fav" value=3>tag3</label>
-    <button type='submit' name='action' value='send'>決定</button>
+  {% for item in items %}
+    <p>
+      <label><input type="checkbox" name="fav" value={{ item[0] }}>{{ item[1] }}</label>
+    </p>
+  {% endfor %}
+
+  <button type='submit' name='action' value='send'>決定</button>
 </form>
