@@ -1,3 +1,4 @@
 # oke environment
+__pycache__
 .direnv
 .envrc
