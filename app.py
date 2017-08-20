@@ -20,9 +20,9 @@ def oshietai():
         print(item_ids)
 
         # 教えたい側のdbから対応するユーザーidをとってくる
-        db.register(item_ids)
+        uid = db.register(item_ids)
         # 別のページに移動
-        return redirect(url_for('thanks'))
+        return render_template('thanks.html', user_id=uid)
 
     return render_template("checkbox.html", items=db.get_items())
 

@@ -38,6 +38,7 @@ def register(itemIds):
         cursor.execute(sql)
         results = cursor.fetchall()
         print(results)
+        return user_id
 
 
 #教えたい側のid引っ張る
