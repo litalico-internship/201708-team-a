@@ -9,7 +9,7 @@ def index():
 
 @app.route('/chat')
 def chat():
-    return render_template('chat.html',user='piyo')
+    return render_template('chat.html',user='listener')
 
 @app.route('/siritai')
 def siritai():
