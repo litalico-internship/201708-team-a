@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
+  <meta name="viewport" content="width=device-width">
   <script src="https://unpkg.com/vue"></script>
   <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -58,7 +59,7 @@
                             <strong class="primary-font">あなた</strong>
                           </div>
                           <p>
-                            {% raw %}  {{ context.user }} {{ context.context }} {% endraw %}
+                            {% raw %}{{ context.context }} {% endraw %}
                           </p>
                         </div>
                       </li>                 
@@ -209,6 +210,10 @@
 }
 .input-group{
   text-align: center;
+}
+#input_text{
+  width: 80%;
+  font-size: 20px;
 }
 
 body {
