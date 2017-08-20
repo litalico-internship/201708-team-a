@@ -11,7 +11,7 @@ def index():
 
 @app.route('/chat')
 def chat():
-    return render_template('chat.html')
+    return render_template('chat.html',user='listener')
 
 @app.route('/oshietai', methods=['GET','POST'])
 def oshietai():

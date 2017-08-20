@@ -36,11 +36,14 @@
           </li>
     	  </ol>
       </div>
- -->          <div class="chat-message" id="app-4">
+ -->          <div class="chat-message">
                 <ul class="chat">
                     <div v-for="context in contexts">
-                      <li class="left clearfix" v-if="context.user === '1'">
+                      <li class="clearfix left" v-bind:class="messageClass" v-if="check_user(context.user) == 'left'">
                         <div class="chat-body clearfix">
+                        <div class="{{messageClass}}">
+                          
+                        </div>
                           <div class="header">
                             <strong class="primary-font">相手</strong>
                           </div>
@@ -116,19 +119,40 @@
 
     // });
   
+      var app = new Vue({
+        el: '#app-4',
+        template: "#hello1",
+        data: {
+            contexts: [],
+            user: "{{ user }}"
+        },
+        computed:{
+          messageClass:function(content_user){
+            if (content_user == "{{ user }}") {
+              return "right";
+            }else{
+              return "left";
+            }
+          }
+        },
+        methods:{
+          check_user:function(content_user){
+            if (content_user == "{{ user }}") {
+              return "right";
+            }else{
+              return "left";
+            }
+          }
+        }
+    });
+
   // //データの変更を検知
   var starCountRef = firebase.database().ref('/rooms/room1/chats');
   starCountRef.on('value', function(snapshot) {
     //console.log(snapshot.val());
     var contexts = snapshot.val();
-    var app = new Vue({
-        el: '#app-4',
-        template: "#hello1",
-        data: {
-            contexts:contexts
-        }
-    })
-  });
+    app.contexts = contexts;
+    });
   //chatの完成待ち
   var starCountRef = firebase.database().ref('/rooms/room1');
   starCountRef.on('value', function(snapshot) {
@@ -147,6 +171,15 @@
     firebase.database().ref('rooms/room1/chats').push(
       {user:document.cookie,context:context});
   }
+
+  function check_user(content_user){
+    if (content_user == "{{ user }}") {
+      return "right";
+    }else{
+      return "left";
+    }
+  }
+
   //writeUserData("1",'itaya',"s@gmail","iii");
 </script>
 <style>
@@ -232,7 +265,7 @@ small, .small {
 }
 
 .chat-message {
-  padding: 60px 20px 115px;
+  padding: 10px 20px 115px;
 }
 
 .chat {
