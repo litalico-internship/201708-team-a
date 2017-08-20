@@ -1,20 +1,28 @@
 <html>
-<head>
-<title>知りたい</title>
-</head>
+  <head>
+    <title>知りたい</title>
+      <meta name="viewport" content="width=device-width">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript" charset="utf-8" async defer></script>
+  </head>
 <body>
-  <form method="post">
+    <div class="container">
+          <div class="starter-template">
+            <form method="post"> <!--action="example.cgi">-->
 
-    {% for item in items %}
-      <p>
-      <input type="radio" name="learn_cat" value={{ item.id }}>{{ item.name }}
-      </p>
-    {% endfor %}
+              {% for item in items %}
+                <p>
+                <input type="radio" name="category" value={{ item[0] }}>{{ item[1] }}
+                </p>
+              {% endfor %}
 
-    <p>
-    <button type='submit' name='action' value='send'>決定</button>
-    </p>
+              <p>
+              <button type='submit' name='action' value='send' class="btn btn-success">決定</button>
+              </p>
 
-  </form>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
