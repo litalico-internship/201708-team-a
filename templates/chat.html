@@ -88,10 +88,13 @@
               </div>
               <div class="chat-box bg-white">
                 <div class="input-group">
-                  <input class="form-control border no-shadow no-rounded" placeholder="Type your message here" id="input_text">
+                    {% raw %} {{ message }}  {% endraw %}
+                  <input class="form-control border no-shadow no-rounded" id="input_text" v-model="message" v-on:keypress.enter="submit">
+                  <!---
                   <span class="input-group-btn">
                     <button class="btn btn-success no-rounded" type="button" onclick="writeUserData()">Send</button>
                   </span>
+                  --->
                 </div><!-- /input-group --> 
               </div>            
       </div>        
@@ -143,6 +146,23 @@
               return "left";
             }
           }
+        }
+    });
+
+    // form用
+    var appForm = new Vue({
+        el: ".input-group",
+        data: {
+            message: ""
+        },
+        methods: {
+            submit:function() {
+              var context = document.getElementById('input_text').value
+              firebase.database().ref('rooms/room1/chats').push(
+                  {user:"{{ user }}",context:context});
+                this.message = "";
+                return true;
+            }
         }
     });
 

@@ -1,6 +1,6 @@
 import flask
 from flask import render_template, request, redirect, url_for
-import db
+#import db
 
 app = flask.Flask(__name__)
 
@@ -13,6 +13,7 @@ def index():
 def chat():
     return render_template('chat.html',user='listener')
 
+"""
 @app.route('/oshietai', methods=['GET','POST'])
 def oshietai():
     print(request.method)
@@ -27,12 +28,13 @@ def oshietai():
         return redirect(url_for('thanks'))
 
     return render_template("checkbox.html", items=db.get_name())
+"""
 
 @app.route('/thanks')
 def thanks():
     return render_template('thanks.html')
 
-
+"""
 @app.route('/siritai', methods=['GET','POST'])
 def siritai():
     print(request.method)
@@ -46,6 +48,8 @@ def siritai():
         return render_template('result.html', uids=uids)
 
     return render_template("siritai.html", items=db.get_name())
+"""
+
 
 @app.route('/result')
 def result():
