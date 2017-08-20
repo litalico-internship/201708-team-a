@@ -5,6 +5,10 @@
   <title>result</title>
 </head>
 <body>
-  <h1>itemIdがマッチするのはこの人達です。, {{ uids }} !</h1>
+  <h1>itemIdがマッチするのはこの人達です。
+    {% for uid in user_ids %}
+      {{ uid }},
+    {% endfor %}
+  </h1>
 </body>
 </html>

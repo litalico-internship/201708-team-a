@@ -8,7 +8,7 @@ charSet         = "utf8mb4"
 cusrorType      = pymysql.cursors.DictCursor
 connection   = pymysql.connect(user=dbUser, password=dbPassword,
                                      db=dbName, charset=charSet,cursorclass=cusrorType)
-id_num = 0
+user_id = 0
 
 with connection.cursor() as cursor:
     sqlQuery = "TRUNCATE TABLE user"
@@ -16,26 +16,28 @@ with connection.cursor() as cursor:
     sqlQuery = "TRUNCATE TABLE user_teaching_item"
     cursor.execute(sqlQuery)
 
+class Item():
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
+
 #登録
 def register(itemIds):
     with connection.cursor() as cursor:
         sql = "INSERT INTO user_teaching_item (id, tag) VALUES (%s, %s)"
         sql2 = "INSERT INTO user (id, push_key) VALUES (%s, %s)"
-        global id_num
-        print(id_num)
-        id_num += 1
+        global user_id
+        print(user_id)
+        user_id += 1
         for i in itemIds:
-            r = cursor.execute(sql, (id_num, i))
-        r2 = cursor.execute(sql2, (id_num, 0))
-        # autocommitではないので、明示的にコミットする
+            r = cursor.execute(sql, (user_id, i))
+        r2 = cursor.execute(sql2, (user_id, 0))
+
         connection.commit()
         sql = "SELECT * FROM user_teaching_item"
         cursor.execute(sql)
-        #sql2 = "SELECT * FROM user"
-        #cursor.execute(sql2)
         results = cursor.fetchall()
         print(results)
-
 
 
 #教えたい側のid引っ張る
@@ -44,17 +46,16 @@ def get_uids(itemId):
         sql = "SELECT id FROM user_teaching_item WHERE tag = %s"
         cursor.execute(sql, itemId)
 
-        # Select結果を取り出す
         results = cursor.fetchall()
         results = set(list(map(lambda dic: dic['id'], results)))
         return results
 
-def get_name():
+#teaching_itemからidとname持ってくる
+def get_items():
     with connection.cursor() as cursor:
         sql = "SELECT * FROM teaching_item"
         cursor.execute(sql)
 
-        # Select結果を取り出す
         results = cursor.fetchall()
-        results = list(map(lambda dic: (dic['id'], dic['name']), results))
+        results = list(map(lambda items: Item(items['id'], items['name']), results))
         return results

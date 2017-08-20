@@ -3,11 +3,11 @@
 <title>知りたい</title>
 </head>
 <body>
-  <form method="post"> <!--action="example.cgi">-->
+  <form method="post">
 
     {% for item in items %}
       <p>
-      <input type="radio" name="category" value={{ item[0] }}>{{ item[1] }}
+      <input type="radio" name="learn_cat" value={{ item.id }}>{{ item.name }}
       </p>
     {% endfor %}
 
